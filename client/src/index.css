@@ -11,25 +11,29 @@ input[type=email].yellow-input:not(.browser-default) {
     color: #fff;
 }
 
-input[type=email].invalid:not(.browser-default) {
+input[type=email].invalid {
     color: red;
     border-bottom: 1px solid red;
     box-shadow: 0 1px 0 0 red;
 }
 
-input[type=password].yellow-input:not(.browser-default) + label,
-input[type=email].yellow-input:not(.browser-default) + label {
+input[type=password].yellow-input + label,
+input[type=email].yellow-input + label {
     color: #fff;
 }
 
-input[type=email].yellow-input:not(.browser-default):focus:not([readonly])+label,
-input[type=password].yellow-input:not(.browser-default):focus:not([readonly])+label {
+input[type=email].yellow-input:focus + label,
+input[type=password].yellow-input:focus + label {
     color: #ffeb3b;
 }
 
-input[type=password].yellow-input:not(.browser-default):focus:not([readonly]),
-input[type=email].yellow-input:not(.browser-default):focus:not([readonly]) {
+input[type=password].yellow-input:focus,
+input[type=email].yellow-input:focus {
     border-bottom: 1px solid #ffeb3b;
     box-shadow: 0 1px 0 0 #ffeb3b;
     color: #fff;
+}
+
+.nav-bar {
+    padding: 0 2rem;
 }
