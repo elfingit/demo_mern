@@ -22,7 +22,7 @@ const endPoints = {
 
       const code = shortid.generate()
 
-      const existing = await Link.findOne({ from })
+      const existing = await Link.findOne({ main: from })
 
       if (existing) {
         return res.json({ link: existing })
