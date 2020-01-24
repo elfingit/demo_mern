@@ -1,11 +1,22 @@
 const Link = require('../../models/Link')
 const config = require('config')
 const shortid = require('shortid')
+const {validationResult} = require('express-validator')
 
 const endPoints = {
 
   generate: async (req, res) => {
     try {
+
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.status(422).json({
+          errors: errors.array(),
+          message: 'Invalid data'
+        })
+      }
+
       const appUrl = config.get('app_url')
       const { from } = req.body
 
@@ -17,10 +28,10 @@ const endPoints = {
         return res.json({ link: existing })
       }
 
-      const to = appUrl + '/t/' + code
+      const alias = appUrl + '/t/' + code
 
       const link = new Link({
-        code, to, from, owner: req.user.userId
+        code, alias, main: from, owner: req.user.userId
       })
 
       await link.save()
@@ -31,6 +42,8 @@ const endPoints = {
       res.status(500).json({
         message: 'Something went wrong, please try again later'
       })
+
+      console.log('Generate url', e.message);
     }
   },
 

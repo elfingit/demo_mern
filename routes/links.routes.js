@@ -1,9 +1,10 @@
 const {Router} = require('express')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
-const {endPoints} = require('../controllers/link')
+const {endPoints, validators} = require('../controllers/link')
 
-router.post('/generate', auth, (req, res) => {
+
+router.post('/generate', auth, validators.generate, (req, res) => {
   endPoints.generate(req, res)
 })
 
