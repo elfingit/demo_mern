@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 const app = express()
 
 app.use(express.json({ extended: true }))
-app.use('/api/auth', require('./routes/auth_routes'))
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/link', require('./routes/links.routes'))
 
 const PORT = config.get('port') || 3000
 

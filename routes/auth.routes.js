@@ -1,8 +1,5 @@
 const {Router} = require('express')
-const config = require('config')
-const bcrypt = require('bcryptjs')
 const {validators, endPoints} = require('../controllers/user')
-const User = require('../models/User')
 const router = Router()
 
 router.post('/register', validators.registration, (req, resp) => {
