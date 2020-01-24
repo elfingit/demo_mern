@@ -20,6 +20,10 @@ export const AuthPage = () => {
   }, [error, message, clearError])
 
   useEffect(() => {
+    window.M.updateTextFields()
+  }, [])
+
+  useEffect(() => {
     setFormErrors(fieldErrors)
   }, [fieldErrors, setFormErrors, formErrors])
 
@@ -60,7 +64,7 @@ export const AuthPage = () => {
     <div className="row">
       <div className="col s6 offset-s3">
         <h1>Shorten link</h1>
-        <div className="card blue darken-1">
+        <div className="card blue darken-1 auth-form">
           <div className="card-content white-text">
             <span className="card-title">Authorization</span>
             <div>
@@ -69,7 +73,7 @@ export const AuthPage = () => {
                   placeholder="Enter email"
                   id="email"
                   type="email"
-                  className={(formErrors && formErrors.email ? 'invalid' : 'validate') + ' yellow-input'}
+                  className={(formErrors && formErrors.email ? 'invalid' : '') + ' yellow-input'}
                   name="email"
                   onChange={changeHandler}
                   value={form.email}
@@ -85,7 +89,7 @@ export const AuthPage = () => {
                   placeholder="Enter password"
                   id="password"
                   type="password"
-                  className={ 'yellow-input ' + (formErrors && formErrors.password ? 'invalid' : 'validate')}
+                  className={ (formErrors && formErrors.password ? 'invalid' : '') + ' yellow-input'}
                   name="password"
                   onChange={changeHandler}
                   value={form.password}
