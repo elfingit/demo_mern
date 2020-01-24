@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useHttp} from '../hooks/http.hook'
 import {useMessage} from '../hooks/message.hook'
+import {AuthContext} from '../context/AuthContext'
 
 export const AuthPage = () => {
+  const auth = useContext(AuthContext)
   const message = useMessage()
   const {loading, error, request, clearError, fieldErrors, clearFieldErrors} = useHttp()
   const [form, setForm] = useState({
@@ -32,6 +34,25 @@ export const AuthPage = () => {
         ...form
       })
 
+      message(data.message)
+
+      setForm({
+        email: '',
+        password: ''
+      })
+
+    } catch (e) {}
+  }
+
+  const loginHandler = async () => {
+    try {
+      clearFieldErrors()
+      const data = await request('/api/auth/login', 'POST', {
+        ...form
+      })
+
+      auth.login(data.token, data.userId)
+
     } catch (e) {}
   }
 
@@ -51,6 +72,7 @@ export const AuthPage = () => {
                   className={(formErrors && formErrors.email ? 'invalid' : 'validate') + ' yellow-input'}
                   name="email"
                   onChange={changeHandler}
+                  value={form.email}
                 />
                 <label htmlFor="email">Email</label>
                 <span
@@ -66,6 +88,7 @@ export const AuthPage = () => {
                   className={ 'yellow-input ' + (formErrors && formErrors.password ? 'invalid' : 'validate')}
                   name="password"
                   onChange={changeHandler}
+                  value={form.password}
                 />
                   <label htmlFor="password">Password</label>
                 <span
@@ -78,6 +101,7 @@ export const AuthPage = () => {
           <div className="card-action">
             <button
               className="btn yellow darken-4 margin-r-1"
+              onClick={loginHandler}
               disabled={loading}
             >Log In</button>
             <button

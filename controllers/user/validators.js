@@ -9,7 +9,9 @@ const validators = {
             .isLength({ min: 6, max: 32 })
     ],
     login: [
-        check('email', 'Input correct email'),
+        check('email', 'Input correct email')
+          .normalizeEmail()
+          .isEmail(),
         check('password', 'Input password')
           .exists()
     ]
