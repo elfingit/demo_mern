@@ -22,7 +22,7 @@ const endPoints = {
 
       const code = shortid.generate()
 
-      const existing = await Link.findOne({ main: from })
+      const existing = await Link.findOne({ main: from, owner: req.user.userId })
 
       if (existing) {
         return res.json({ link: existing })
@@ -36,7 +36,7 @@ const endPoints = {
 
       await link.save()
 
-      res.status(201).json(link)
+      return res.status(201).json(link)
 
     } catch (e) {
       res.status(500).json({

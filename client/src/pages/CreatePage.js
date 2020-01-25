@@ -31,9 +31,11 @@ export const CreatePage = () => {
           Authorization: `Bearer ${auth.token}`
         })
 
-        history.push(`/detail/${data.link._id}`)
+        history.push(`/detail/${data._id}`)
 
-      } catch (e) {}
+      } catch (e) {
+        console.log(e.message);
+      }
     }
   }
 
