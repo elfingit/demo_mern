@@ -12,7 +12,7 @@ export const useAuth = () => {
     setUserId(uId)
 
     localStorage.setItem(storageName, JSON.stringify({
-      userId: uId, token: jwtToken
+      userId: uId, token: jwtToken, expire: Date.now() + 1 * 60000
     }))
 
   }, [])
@@ -26,7 +26,12 @@ export const useAuth = () => {
   }, [])
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(storageName))
+    let data = JSON.parse(localStorage.getItem(storageName))
+
+    if (data && data.expire <= Date.now()) {
+      localStorage.removeItem(storageName)
+      data = null
+    }
 
     if (data && data.token) {
       login(data.token, data.userId)

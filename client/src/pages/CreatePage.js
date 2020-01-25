@@ -2,13 +2,15 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from "../context/AuthContext";
 import {useHistory} from 'react-router-dom'
+import {useMessage} from "../hooks/message.hook";
 
 export const CreatePage = () => {
 
-  const { request, fieldErrors, clearFieldErrors } = useHttp()
+  const { request, fieldErrors, clearFieldErrors, error, clearError, unAuthorized } = useHttp()
 
   const [formErrors, setFormErrors] = useState(null)
   const [link, setLink] = useState('')
+  const message = useMessage()
 
   const history = useHistory()
   const auth = useContext(AuthContext)
@@ -20,6 +22,19 @@ export const CreatePage = () => {
   useEffect(() => {
     setFormErrors(fieldErrors)
   }, [fieldErrors, setFormErrors, formErrors])
+
+  useEffect(() => {
+    message(error)
+    clearError()
+  }, [error, message, clearError])
+
+  useEffect(() => {
+
+    if (unAuthorized === true) {
+      auth.logout()
+    }
+
+  }, [unAuthorized])
 
   const pressHandler = async event => {
     if (event.key === 'Enter') {
@@ -34,7 +49,6 @@ export const CreatePage = () => {
         history.push(`/detail/${data._id}`)
 
       } catch (e) {
-        console.log(e.message);
       }
     }
   }

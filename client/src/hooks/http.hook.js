@@ -1,10 +1,10 @@
 import {useState, useCallback} from 'react'
 
 export const useHttp = () => {
-
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [fieldErrors, setFieldErrors] = useState(null)
+  const [unAuthorized, setUnAuthorized] = useState(false)
 
   const request = useCallback(async (url, method = 'GET', body = null, headers = {}) => {
     setLoading(true)
@@ -28,6 +28,8 @@ export const useHttp = () => {
         })
 
         return setFieldErrors(respErrors)
+      } else if (!response.ok && response.status === 401) {
+        return setUnAuthorized(true)
       } else if (!response.ok) {
         throw new Error(data.message || 'Something went wrong. Please try again later.')
       }
@@ -46,5 +48,5 @@ export const useHttp = () => {
   const clearError = useCallback(() => setError(null), [])
   const clearFieldErrors = useCallback(() => setFieldErrors(null), [])
 
-  return { loading, request, error, clearError, fieldErrors, clearFieldErrors }
+  return { loading, request, error, clearError, fieldErrors, clearFieldErrors, unAuthorized }
 }
