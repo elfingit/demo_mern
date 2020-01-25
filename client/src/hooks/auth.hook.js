@@ -12,7 +12,7 @@ export const useAuth = () => {
     setUserId(uId)
 
     localStorage.setItem(storageName, JSON.stringify({
-      userId: uId, token: jwtToken, expire: Date.now() + 1 * 60000
+      userId: uId, token: jwtToken, expire: Date.now() + 59 * 60000
     }))
 
   }, [])

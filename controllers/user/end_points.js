@@ -82,7 +82,7 @@ const endPoints = {
             const token = jwt.sign(
                 { userId: user.id },
                 config.get('jwt_secret_key'),
-                { expiresIn: '1m'}
+                { expiresIn: '1h'}
             )
 
             res.json({
