@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const PORT = config.get('port') || 3000
+const HOST = config.get('host') || '127.0.0.1'
 
 async function start() {
     try {
